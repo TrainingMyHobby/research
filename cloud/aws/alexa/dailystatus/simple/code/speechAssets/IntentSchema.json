@@ -1,6 +1,6 @@
 {
     "intents": [{
-        "intent": "ProjectCodeAcceptIntent",
+        "intent": "ProjectScrumStandupLaunchIntent",
         "slots": [{
             "name": "projectCode",
             "type": "LIST_OF_PROJECT_CODES"
