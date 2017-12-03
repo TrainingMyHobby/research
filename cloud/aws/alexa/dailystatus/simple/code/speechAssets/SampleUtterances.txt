@@ -1,0 +1,5 @@
+ProjectCodeAcceptIntent {projectCode}
+ProjectCodeAcceptIntent my project code is {projectCode}
+ProjectCodeAcceptIntent my JIRA project code is {projectCode}
+ProjectCodeAcceptIntent my code is {projectCode}
+ProjectCodeAcceptIntent is {projectCode}

@@ -1,0 +1,11 @@
+{
+    "intents": [{
+        "intent": "ProjectCodeAcceptIntent",
+        "slots": [{
+            "name": "projectCode",
+            "type": "LIST_OF_PROJECT_CODES"
+        }]
+    }, {
+        "intent": "ProjectUserCodeAcceptIntent"
+    }]
+}
