@@ -2,60 +2,81 @@
 
 const Alexa = require('alexa-sdk');
 
-const welcomeOutput = "Welcome to Daily Status.";
+const welcomeOutput = "Welcome to Daily Status by Kishore Veleti.";
 const welcomeSayOutput = "You have 3 options to ask me about your project. You can say start session scrum, OR start session summary, or start session user.";
 const welcomeRepromptOutput = welcomeSayOutput;
+
+ const projectCodeWelcomeMessage = "To start, please specify your project number. You need to say, project number is 100";
 
 exports.handler = function(event, context, callback) {
 
   var alexa = Alexa.handler(event, context, callback);
-  alexa.registerHandlers(handlers,projectHandlers);
+  alexa.registerHandlers(handlers);
   alexa.execute();
 };
-
-var msgQueue = []
-
-function publishMessageQueue() {
-
-  var finalMsg = ''
-  for (var i = 0; i < msgQueue.length; i++) {
-    finalMsg = finalMsg + ' ' + msgQueue[i];
-  }
-
-  this.response.speak(finalMsg);
-  this.emit(':responseReady');
-}
-
-function InitiateProjectCode() {
-    msgQueue.push(projectCodeWelcomeMessage);
-    publishMessageQueue();
-    //this.response.speak(projectCodeWelcomeMessage).listen(projectCodeWelcomeMessage);
-    //this.emit(':responseReady');
-}
 
 const handlers = {
 
   'LaunchRequest': function () {
-        //this.emit(':tell', welcomeOutput);
-        //this.response.speak(welcomeOutput + " " + welcomeSayOutput).listen(welcomeRepromptOutput);
-        msgQueue.push(welcomeOutput);
-        msgQueue.push(welcomeSayOutput);
+        this.response.speak(welcomeOutput + " " + welcomeSayOutput).listen(welcomeRepromptOutput);
         //this.emit(':ask',welcomeSayOutput);
-        //this.emit(':responseReady');
-        publishMessageQueue();
+        this.emit(':responseReady');
   },
 
   'InputUserInitialOptionRequest': function () {
         var userOption = this.event.request.intent.slots.userInitialOption.value;
         this.attributes['UserCurrentOption'] = userOption;
-        //this.response.speak("You said " + userOption);
-        msgQueue.push("You said " + userOption);
-        //this.emit('InitiateProjectCode');
-        InitiateProjectCode();
+
+        var messageForProjCode = "You said " + userOption + ". " + projectCodeWelcomeMessage;
+        this.response.speak(messageForProjCode).listen(projectCodeWelcomeMessage);;
+        this.emit(':responseReady');
   },
 
+  'InputProjectCodeAccept': function () {
+        var userProjectCode = this.event.request.intent.slots.userProjectCode.value;
+        this.attributes['userProjectCode'] = userProjectCode;
+
+        if(this.attributes['UserCurrentOption'] == "scrum") {
+          var msgNoOfTeamMembers = "For project code number " + this.attributes['userProjectCode']
+          + " , I found 2 team members.";
+          msgNoOfTeamMembers = msgNoOfTeamMembers + " Now starting daily status for each user. To start, you need to say, daily update for user number 200."
+          this.response.speak(msgNoOfTeamMembers).listen(msgNoOfTeamMembers);;
+          this.emit(':responseReady');
+        }
+        else if(this.attributes['UserCurrentOption'] == "summary") {
+          var msgScrumSummary = "For project code number " + this.attributes['userProjectCode']
+          + " , in the latest sprint, I found 2 team members and 5 user stories. To continue with main memu please say go to main menu.";
+          this.response.speak(msgScrumSummary).listen(msgScrumSummary);;
+          this.emit(':responseReady');
+        }
+        else if(this.attributes['UserCurrentOption'] == "user") {
+          var msgScrumSummary = "For project code number " + this.attributes['userProjectCode']
+          + " , to know user stories, please specify project user number. You need to say, project user number is 200";
+          this.response.speak(msgScrumSummary).listen(msgScrumSummary);;
+          this.emit(':responseReady');
+        }
+        else  {
+          var msgScrumSummary = "For project number " + this.attributes['userProjectCode']
+          + " , I do not know the selected option. To continue with main memu please say go to main menu.";
+          this.response.speak(msgScrumSummary).listen(msgScrumSummary);;
+          this.emit(':responseReady');
+        }
+  },
+  'InputBackToMainMenuAccept': function () {
+       this.emit('InputUserInitialOptionRequest');
+   },
+  'InputProjectScrumEachUerIdAccept': function () {
+      var userId = this.event.request.intent.slots.userIdForDailyUpdate.value;
+      this.attributes['UserCurrentUserId'] = userId;
+
+      var messageForUserDailyUpdate = "For user number " + userId + ", in project " + this.attributes['userProjectCode'];
+      messageForUserDailyUpdate = messageForUserDailyUpdate + " there are 2 stories. 1 story not yet started and 1 story in progress."
+      messageForUserDailyUpdate = messageForUserDailyUpdate + " Checking with user number " + userId + ", did you completed story number 1000?"
+      this.response.speak(messageForUserDailyUpdate).listen(messageForUserDailyUpdate);;
+      this.emit(':responseReady');
+   },
   'AMAZON.CancelIntent': function () {
-       this.response.speak('Goodbye!');
+       this.response.speak('Thanks for your updates. This is a dummy Alexa skill to validate the idea of Alexa Skill for Agile daily SCRUM. Thanks for testing me, Goodbye!');
        this.emit(':responseReady');
    },
    'AMAZON.HelpIntent': function () {
@@ -66,20 +87,5 @@ const handlers = {
        this.emit(':responseReady');
    }
 
-};
 
-var projectCodeWelcomeMessage = "Please say project code number, followed by project code. For example, project code number 100";
-const projectHandlers = {
-
-  /*'InitiateProjectCode': function () {
-      this.response.speak(projectCodeWelcomeMessage).listen(projectCodeWelcomeMessage);
-      this.emit(':responseReady');
-  },
-  */
-
-  'InputProjectCodeAccept' : function () {
-    var userProjectCode = this.event.request.intent.slots.userProjectCode.value;
-    this.attributes['UserCurrentProjectCode'] = userProjectCode;
-    this.emit(':tell', "You said your project code as " + userProjectCode);
-  }
 };

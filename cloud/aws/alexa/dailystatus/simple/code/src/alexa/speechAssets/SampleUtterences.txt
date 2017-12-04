@@ -1,2 +1,10 @@
 InputUserInitialOptionRequest start session {userInitialOption}
-InputProjectCodeAccept project code number {userProjectCode}
+InputProjectCodeAccept project number is {userProjectCode}
+InputProjectScrumEachUerIdAccept daily update for user number {userIdForDailyUpdate}
+InputBackToMainMenuAccept go to main menu
+AMAZON.CancelIntent shutdown
+AMAZON.CancelIntent shut down
+AMAZON.CancelIntent cancel
+AMAZON.CancelIntent close
+AMAZON.CancelIntent yes
+AMAZON.CancelIntent no

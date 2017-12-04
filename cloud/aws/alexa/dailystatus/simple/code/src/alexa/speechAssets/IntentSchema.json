@@ -16,6 +16,20 @@
             "type": "AMAZON.NUMBER"
             }
         ]
+      },
+      {
+        "intent" : "InputProjectScrumEachUerIdAccept",
+        "slots" : [{
+            "name": "userIdForDailyUpdate",
+            "type": "AMAZON.NUMBER"
+            }
+        ]
+      },
+      {
+        "intent" : "InputBackToMainMenuAccept"
+      },
+      {
+        "intent" : "AMAZON.CancelIntent"
       }
     ]
 }
