@@ -3,10 +3,10 @@
 const Alexa = require('alexa-sdk');
 
 const welcomeOutput = "Welcome to Daily Status by Kishore Veleti.";
-const welcomeSayOutput = "You have 3 options to ask me about your project. You can say start session scrum, OR start session summary, or start session user.";
+const welcomeSayOutput = "You have 3 options to ask me about your project. You can say start session scrum, OR start session summary, or start session user. Now I am listening for your response.";
 const welcomeRepromptOutput = welcomeSayOutput;
 
- const projectCodeWelcomeMessage = "To start, please specify your project number. You need to say, project number is 100";
+ const projectCodeWelcomeMessage = "To start, please specify your project number. You need to say, project number is 100. Now I am listening for your response.";
 
 exports.handler = function(event, context, callback) {
 
@@ -39,19 +39,19 @@ const handlers = {
         if(this.attributes['UserCurrentOption'] == "scrum") {
           var msgNoOfTeamMembers = "For project code number " + this.attributes['userProjectCode']
           + " , I found 2 team members.";
-          msgNoOfTeamMembers = msgNoOfTeamMembers + " Now starting daily status for each user. To start, you need to say, daily update for user number 200."
+          msgNoOfTeamMembers = msgNoOfTeamMembers + " Now starting daily status for each user. To start, you need to say, daily update for user number 200. Now I am listening for your response."
           this.response.speak(msgNoOfTeamMembers).listen(msgNoOfTeamMembers);;
           this.emit(':responseReady');
         }
         else if(this.attributes['UserCurrentOption'] == "summary") {
           var msgScrumSummary = "For project code number " + this.attributes['userProjectCode']
-          + " , in the latest sprint, I found 2 team members and 5 user stories. To continue with main memu please say go to main menu.";
+          + " , in the latest sprint, I found 2 team members and 5 user stories. To continue with main memu please say go to main menu. Now I am listening for your response.";
           this.response.speak(msgScrumSummary).listen(msgScrumSummary);;
           this.emit(':responseReady');
         }
         else if(this.attributes['UserCurrentOption'] == "user") {
           var msgScrumSummary = "For project code number " + this.attributes['userProjectCode']
-          + " , to know user stories, please specify project user number. You need to say, project user number is 200";
+          + " , to know user stories, please specify project user number. You need to say, project user number is 200. Now I am listening for your response.";
           this.response.speak(msgScrumSummary).listen(msgScrumSummary);;
           this.emit(':responseReady');
         }
@@ -76,7 +76,7 @@ const handlers = {
       this.emit(':responseReady');
    },
   'AMAZON.CancelIntent': function () {
-       this.response.speak('Thanks for your updates. This is a dummy Alexa skill to validate the idea of Alexa Skill for Agile daily SCRUM. Thanks for testing me, Goodbye!');
+       this.response.speak('Thanks for your updates. This is a dummy Alexa skill by Kishore Veleti, develped to validate the idea of Agile daily SCRUM through Alexa. Thanks for testing me, Goodbye!');
        this.emit(':responseReady');
    },
    'AMAZON.HelpIntent': function () {
