@@ -1,0 +1,21 @@
+{
+    "intents": [
+
+      {
+        "intent" : "InputUserInitialOptionRequest",
+        "slots" : [{
+            "name": "userInitialOption",
+            "type": "LIST_OF_INITIAL_OPTIONS"
+            }
+        ]
+      },
+      {
+        "intent" : "InputProjectCodeAccept",
+        "slots" : [{
+            "name": "userProjectCode",
+            "type": "AMAZON.NUMBER"
+            }
+        ]
+      }
+    ]
+}

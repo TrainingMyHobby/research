@@ -1,0 +1,2 @@
+InputUserInitialOptionRequest start session {userInitialOption}
+InputProjectCodeAccept project code number {userProjectCode}

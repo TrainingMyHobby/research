@@ -1,0 +1,11 @@
+{
+  "name": "Alexa-DailyStatus-Simple",
+  "version": "1.0.0",
+  "description": "Simple App on how to use Alexa to run daily Agile daily standup meeting",
+  "main": "index.js",
+  "author": "TrainingMyHobby team",
+  "dependencies": {
+    "alexa-sdk": "^1.0.22",
+    "cleverbot.io": "^1.0.4"
+  }
+}
